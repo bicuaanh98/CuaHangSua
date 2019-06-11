@@ -1,0 +1,15 @@
+﻿@model IEnumerable<CuaHangSua.Models.DAO.ThuongHieuViewModel>
+<div class="col-md-3 col-sm-12 col-xs-12">
+
+    <div class="catagory hidden-sm">
+        <div class="sidebar-title">
+            <h3>Danh mục sữa</h3>
+        </div>
+        <ul class="menu-sidebar">
+            @foreach (var item in Model)
+            {
+                <li><a href="/@item.ThuongHieuID"> @item.TenThuongHieu</a></li>
+            }
+        </ul>
+    </div>
+</div>

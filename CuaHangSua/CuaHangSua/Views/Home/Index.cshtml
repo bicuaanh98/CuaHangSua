@@ -1,0 +1,16 @@
+﻿@model IEnumerable<CuaHangSua.Models.DAO.ProductViewModel>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<table class="table table-bordered">
+    @foreach (var item in Model)
+    {
+    <tr>
+        <td>@item.SuaID</td>
+        <td>@item.TenSua</td>
+    </tr>
+    }
+</table>
+
