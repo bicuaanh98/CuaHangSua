@@ -1,0 +1,28 @@
+﻿@model IEnumerable<CuaHangSua.Models.DAO.ThuongHieuViewModel>
+
+<div class="nav">
+    <div class="container">
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul style="margin: 0;" class="main-menu col-md-8">
+                <li><a href="@Url.Action("Index", "Home")">Trang chủ</a></li>
+                <li>
+                    <a href="@Url.Action("Index", "Home")">Sản phẩm</a>
+                    <ul class="product-menu">
+                        @foreach (var item in Model)
+                        {
+                            <li><a href="/@item.ThuongHieuID"> @item.TenThuongHieu</a></li>
+                        }
+                    </ul>
+                </li>
+                <li><a href="/About/Index">Giới thiệu</a></li>
+            </ul>
+
+            <div class="col-md-4 hidden-sm hidden-xs hotline">
+                <img src="~/Content/Images/call_white.png" width="30" alt="hotline"> <span style="color: white;">hotline :</span>
+                <a href="tel:@Html.Raw(String.Format("{0:0#########}", "0336800666"))">@Html.Raw(String.Format("{0:0### ### ###}", "0336800666"))</a>
+                <a href="tel:@Html.Raw(String.Format("{0:0#########}", "0968439641"))"> - @Html.Raw(String.Format("{0:0### ### ###}", "0968439641"))</a>
+            </div>
+        </div>
+    </div>
+</div>
+

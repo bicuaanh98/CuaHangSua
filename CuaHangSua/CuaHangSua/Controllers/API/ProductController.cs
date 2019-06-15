@@ -20,7 +20,40 @@ namespace CuaHangSua.Controllers.API
         {
             IList<ProductViewModel> products = null;
 
-            products = db.Suas.Include("Lo")
+            products = db.Suas.Include("ThuongHieu")
+                .Select(s => new ProductViewModel()
+                {
+                    SuaID = s.SuaID,
+                    TenSua = s.TenSua,
+                    CachSuDung = s.CachSuDung,
+                    BaoQuan = s.BaoQuan,
+                    ThanhPhan = s.ThanhPhan,
+                    DonGia = s.DonGia,
+                    KhoiLuong = s.KhoiLuong,
+                    DonViTInh = s.DonViTInh,
+                    Anh = s.Anh,
+                    ThuongHieu=new ThuongHieuViewModel()
+                    {
+                        ThuongHieuID=s.ThuongHieuID,
+                        TenThuongHieu=s.ThuongHieu.TenThuongHieu,
+                        XuatXu=s.ThuongHieu.XuatXu
+                    }
+                }).ToList();
+                               
+            if (products.Count == 0)
+            {
+                return NotFound();
+            }
+
+            return Ok(products);
+        } 
+
+        public IHttpActionResult GetDetailProduct(int id)
+        {
+            ProductViewModel product = null;
+
+            product =(ProductViewModel)db.Suas.Include("Lo")
+                .Where(s => s.SuaID == id)
                 .Select(s => new ProductViewModel()
                 {
                     SuaID = s.SuaID,
@@ -32,15 +65,15 @@ namespace CuaHangSua.Controllers.API
                     KhoiLuong = s.KhoiLuong,
                     DonViTInh = s.DonViTInh,
                     Anh = s.Anh
-                }).ToList();
-                               
+                }).FirstOrDefault();
 
-            if (products.Count == 0)
+
+            if (product == null) 
             {
                 return NotFound();
             }
 
-            return Ok(products);
+            return Ok(product);
         }
     }
 }

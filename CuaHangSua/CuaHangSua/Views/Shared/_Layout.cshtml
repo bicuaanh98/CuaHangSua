@@ -9,42 +9,43 @@
     <link rel="stylesheet" href="~/Content/bootstrap-theme.min.css">
     <link rel="stylesheet" href="~/Content/owl.carousel.min.css">
     <link rel="stylesheet" href="~/Content/owl.theme.default.min.css">
-    <link href="~/Content/alertifyjs/alertify.min.css" rel="stylesheet" />
-    <link href="~/Content/alertifyjs/themes/default.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
     <link href="~/Content/footer-distributed-with-address-and-phones.css" rel="stylesheet" />
     <link href="~/Content/style_end_user.css" rel="stylesheet" />
     <link href="~/Content/style_2.css" rel="stylesheet" />
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, null)</li>
-                    <li>@Html.ActionLink("API", "Index", "Help", new { area = "" }, null)</li>
-                </ul>
+    <div class="wrapper">
+        @RenderPage("~/Views/Shared/Header.cshtml")
+    </div>
+    @Html.Action("NavMenu", "Home")
+
+    @RenderPage("~/Views/Shared/Banner.cshtml")
+
+    <div class="main">
+        <div class="container clearfix">
+            @Html.Action("CategoryMenu", "Home")
+            <div class="col-md-9 col-sm-12 col-xs-12">
+                <div id="product_area">
+                    @RenderBody();
+                </div>
             </div>
         </div>
     </div>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-        </footer>
-    </div>
+    @RenderPage("~/Views/Shared/footer.cshtml")
+    <script src="~/Scripts/jquery-3.3.1.js"></script>
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/owl.carousel.min.js"></script>
+    <script>
+        $(document).ready(function () {
 
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
+            $(".owl-carousel").owlCarousel({
+                items: 1,
+                loop: true,
+                autoplay: true
+            });
+        });
+    </script>
 </body>
 </html>

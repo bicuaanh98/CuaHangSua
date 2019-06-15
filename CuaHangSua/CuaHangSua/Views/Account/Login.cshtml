@@ -1,0 +1,94 @@
+﻿@{ 
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Đăng nhập</title>
+    <!-- plugins:css -->
+    <link href="~/Content/materialdesignicons.min.css" rel="stylesheet" />
+    <link href="~/Content/vendor.bundle.base.css" rel="stylesheet" />
+    <link href="~/Content/vendor.bundle.addons.css" rel="stylesheet" />
+    <!-- endinject -->
+    <!-- plugin css for this page -->
+    <!-- End plugin css for this page -->
+    <!-- inject:css -->
+
+    <link href="~/Content/style_login.css" rel="stylesheet" />
+    <!-- endinject -->
+    <link rel="shortcut icon" href="~/Content/Images/logo.jpg" />
+</head>
+<body>
+    <div class="container-scroller">
+        <div class="container-fluid page-body-wrapper full-page-wrapper auth-page">
+            <div class="content-wrapper d-flex align-items-center auth auth-bg-1 theme-one">
+                <div class="row w-100">
+                    <div class="col-lg-4 mx-auto">
+                        <div class="auto-form-wrapper">
+                            <form action="/Account/Login" method="post">
+
+                                <div><h5 style="color:red">@Session["Status"]</h5></div>
+
+                                <div class="form-group">
+                                    <label class="label">Tên tài khoản</label>
+                                    <div class="input-group">
+                                        <input type="text" name="TenDangNhap" value="@Session["TenDangNhap"]" class="form-control" placeholder="Tên tài khoản">
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">
+                                                <i class="mdi mdi-check-circle-outline"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="label">Mật khẩu</label>
+                                    <div class="input-group">
+                                        <input type="password" name="MatKhau" value="@Session["MatKhau"]" class="form-control" placeholder="*********">
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">
+                                                <i class="mdi mdi-check-circle-outline"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-primary submit-btn btn-block">Đăng nhập</button>
+                                </div>
+                                <div class="form-group d-flex justify-content-between">
+                                    <div class="form-check form-check-flat mt-0">
+                                        <label class="form-check-label">
+                                            <input type="checkbox" name="NhoMatKhau" value="true" class="form-check-input"> Nhớ mật khẩu
+                                        </label>
+                                    </div>
+
+                                </div>
+
+                                <div class="text-block text-center my-3">
+                                    <span class="text-small font-weight-semibold">Chưa có tài khoản ?</span>
+                                    <a href="/Account/Register" class="text-black text-small">Đăng kí tài khoản mới</a>
+                                </div>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!-- content-wrapper ends -->
+        </div>
+        <!-- page-body-wrapper ends -->
+    </div>
+    <!-- container-scroller -->
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <!-- plugins:js -->
+    <script src="~/Scripts/vendor.bundle.addons.js"></script>
+    <script src="~/Scripts/vendor.bundle.base.js"></script>
+    <!-- endinject -->
+    <!-- inject:js -->
+    <script src="~/Scripts/off-canvas.js"></script>
+    <script src="~/Scripts/misc.js"></script>
+    <!-- endinject -->
+</body>
+</html>

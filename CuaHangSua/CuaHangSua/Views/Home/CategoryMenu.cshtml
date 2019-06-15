@@ -8,7 +8,7 @@
         <ul class="menu-sidebar">
             @foreach (var item in Model)
             {
-                <li><a href="/@item.ThuongHieuID"> @item.TenThuongHieu</a></li>
+                <li>@Html.ActionLink(item.TenThuongHieu,"Index",new { category=item.TenThuongHieu})</li>
             }
         </ul>
     </div>

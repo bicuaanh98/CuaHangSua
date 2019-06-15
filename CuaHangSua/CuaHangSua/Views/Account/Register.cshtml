@@ -1,0 +1,239 @@
+﻿@model CuaHangSua.Models.DAO.KhachHangViewModel
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Đăng kí</title>
+    <!-- plugins:css -->
+    <link href="~/Content/materialdesignicons.min.css" rel="stylesheet" />
+    <link href="~/Content/vendor.bundle.base.css" rel="stylesheet" />
+    <link href="~/Content/vendor.bundle.addons.css" rel="stylesheet" />
+    <!-- endinject -->
+    <!-- plugin css for this page -->
+    <!-- End plugin css for this page -->
+    <!-- inject:css -->
+
+    <link href="~/Content/style_login.css" rel="stylesheet" />
+    <!-- endinject -->
+    <link rel="shortcut icon" href="~/Content/Images/logo.jpg" />
+    <style>
+        .errMsg {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-scroller">
+        <div class="container-fluid page-body-wrapper full-page-wrapper auth-page">
+            <div class="content-wrapper d-flex align-items-center auth register-bg-1 theme-one">
+                <div class="row w-100">
+                    <div class="col-lg-4 mx-auto">
+                        <h2 class="text-center mb-4">Register</h2>
+                        <div class="auto-form-wrapper">
+                            <form action="/Account/register" method="post" id="Form">
+                                <div class="form-group">
+                                    <label class="label">Tên đăng nhập</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" id="Username" name="Username" maxlength="20" placeholder="Tên đăng nhập">
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">
+                                                <i class="mdi mdi-check-circle-outline"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <span id="UsernameErr" class="errMsg"></span>
+                                </div>
+                                <label class="label">Mật khẩu</label>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <input type="password" class="form-control" id="Password" name="Password" maxlength="20" placeholder="Mật khẩu">
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">
+                                                <i class="mdi mdi-check-circle-outline"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <span id="PasswordErr" class="errMsg"></span>
+                                </div>
+
+                                <label class="label">Nhập lại mật khẩu</label>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <input type="password" class="form-control" id="XacNhan" name="XacNhan" maxlength="20" placeholder="Nhập lại mật khẩu">
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">
+                                                <i class="mdi mdi-check-circle-outline"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <span id="XacNhanErr" class="errMsg"></span>
+                                </div>
+                                <label class="label">Họ và tên</label>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" id="TenKhachHang" name="TenKhachHang" placeholder="Họ và tên">
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">
+                                                <i class="mdi mdi-check-circle-outline"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <span id="TenKhachHangErr" class="errMsg"></span>
+                                </div>
+                                <label class="label">Số điện thoại</label>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" id="SDT" name="SDT" placeholder="Số điện thoại">
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">
+                                                <i class="mdi mdi-check-circle-outline"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <span id="SDTErr" class="errMsg"></span>
+                                </div>
+                                <label class="label">Email</label>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" id="Email" name="Email" placeholder="Email">
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">
+                                                <i class="mdi mdi-check-circle-outline"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <span id="EmailErr" class="errMsg"></span>
+                                </div>
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-primary submit-btn btn-block">Đăng kí</button>
+                                </div>
+                                <div class="text-block text-center my-3">
+                                    <span class="text-small font-weight-semibold">Tôi đã có tài khoản ?</span>
+                                    <a href="/Account/Login" class="text-black text-small">Đăng nhập</a>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- content-wrapper ends -->
+        </div>
+        <!-- page-body-wrapper ends -->
+    </div>
+    <!-- container-scroller -->
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <!-- plugins:js -->
+    <script src="~/Scripts/vendor.bundle.addons.js"></script>
+    <script src="~/Scripts/vendor.bundle.base.js"></script>
+    <!-- endinject -->
+    <!-- inject:js -->
+    <script src="~/Scripts/off-canvas.js"></script>
+    <script src="~/Scripts/misc.js"></script>
+    <!-- endinject -->
+    <script>
+        function kiemTraTrong(string) {
+            var check = (document.getElementById(string).value).trim();
+            if (check == "" || check == null) {
+                document.getElementById(string + 'Err').innerHTML = "Không được để trống ";
+                return false;
+            }
+            return true;
+        }
+
+        function kiemTraDoDai(string, min, max) {
+            var check = document.getElementById(string).value.length;
+            if (check < min || check > max) {
+                document.getElementById(string + 'Err').innerHTML = "Độ dài phải từ " + min + ' - ' + max + " kí tự";
+                return false;
+            }
+            return true;
+        }
+
+        function kiemTraLaSo(string) {
+            var check = (document.getElementById(string).value).trim();
+            var pattern = /^[0-9]*$/
+            if (pattern.test(check) == false) {
+                document.getElementById(string + 'Err').innerHTML = "Chỉ gồm số";
+                return false;
+            }
+            return true;
+        }
+
+        function kiemTraLaEmail(string) {
+            var check = (document.getElementById(string).value).trim();
+            var pattern = /^\w+@@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/
+            if (pattern.test(check) == false) {
+                document.getElementById(string + 'Err').innerHTML = "Email không đúng định dạng";
+                return false;
+            }
+            return true;
+        }
+
+        function kiemTraForm() {
+            if (!kiemTraTrong($('#Username').attr('id')))
+                return false;
+            if (!kiemTraDoDai($('#Username').attr('id'), 6, 20)) {
+                return false;
+            }
+            if (!kiemTraTrong($('#Password').attr('id'))) {
+                return false;
+            }
+            if (!kiemTraDoDai($('#Password').attr('id'), 6, 20)) {
+                return false;
+            }
+            if (!kiemTraTrong($('#XacNhan').attr('id'))) {
+                return false;
+            }
+            if (!kiemTraDoDai($('#XacNhan').attr('id'), 6, 20)) {
+                return false;
+            }
+            if (($('#Password').val() != $('#XacNhan').val())) {
+                document.getElementById('XacNhanErr').innerHTML = "Mật khẩu và xác nhận mật khẩu phải trùng nhau";
+                return false;
+            }
+            if (!kiemTraTrong($('#TenKhachHang').attr('id'))) {
+                return false;
+            }
+            if (!kiemTraTrong($('#SDT').attr('id'))) {
+                return false;
+            }
+            if (!kiemTraLaSo($('#SDT').attr('id'))) {
+                return false;
+            }
+            if (!kiemTraTrong($('#Email').attr('id'))) {
+                return false;
+            }
+            if (!kiemTraLaEmail($('#Email').attr('id'))) {
+                return false;
+            }  
+            return true;
+        }
+
+        $('#Form').submit(function () {
+            console.log('adf');
+            if (kiemTraForm()) {
+                return true;
+                console.log("success");
+            }
+            else {
+                return false;
+                console.log("failed");
+            }
+        })
+    </script>
+</body>
+</html>

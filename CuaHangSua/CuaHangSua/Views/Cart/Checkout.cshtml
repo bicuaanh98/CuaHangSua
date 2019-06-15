@@ -1,0 +1,179 @@
+﻿@using CuaHangSua.Models.Entities
+@{
+    Cart cart = (Cart)Session["Cart"];
+    int totalItem = 0;
+    float totalMoney = 0.0f;
+
+    if (cart != null)
+    {
+        totalItem = cart.TotalItem();
+        totalMoney = cart.ComputeTotalValue();
+    }
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>EditSanPham</title>
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <style>
+        .errMsg {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="row" style="padding-top:60px">
+        <form action="CheckoutStatus" method="post" id="Form">
+            <div class="col-lg-7 col-md-7">
+                <!-- Billing Details -->
+
+                <div class="billing-details">
+                    <div class="section-title">
+                        <h3 class="">Thông tin giao hàng</h3>
+                    </div>
+                    <div class="form-group">
+                        <input class="input" type="hidden" name="KhachHangID" value="@Session["KhachHangID"]">
+                    </div>
+                    <label style="color: black" class="label">Tên khách hàng</label>
+                    <div class="form-group">
+                        <input class="input" type="text" name="TenKhachHang" placeholder="Tên khách hàng" required value="@Session["TenKhachHang"]">
+                        <br />
+                        <span id="TenKhachHangErr" class="errMsg"></span>
+                    </div>
+                    <label style="color: black" class="label">SĐT</label>
+                    <div class="form-group">
+                        <input class="input" type="text" name="SDT" placeholder="SDT" required value="@Session["SDT"]">
+                        <br />
+                        <span id="SDTErr" class="errMsg"></span>
+                    </div>
+                    <label style="color: black" class="label">Email</label>
+                    <div class="form-group">
+                        <input class="input" type="email" name="Email" placeholder="Email" required value="@Session["Email"]">
+                        <br />
+                        <span id="EmailErr" class="errMsg"></span>
+                    </div>
+                    <label style="color: black" class="label">Địa chỉ</label>
+                    <div style="color: black" class="form-group">
+                        <input class="input" type="text" name="DiaChi" placeholder="Địa chỉ" required value="">
+                        <br />
+                        <span id="DiaChiErr" class="errMsg"></span>
+                    </div>
+                </div>
+                <!-- /Billing Details -->
+            </div>
+
+            <!-- Order Details -->
+            <div class="col-lg-5 col-md-5 order-details">
+                <div class="section-title text-center">
+                    <h3 class="">Giỏ hàng của bạn</h3>
+                </div>
+                <div class="order-summary">
+                    <table class="table table-hover">
+                        <thead>
+                        <th>Tên sản phẩm</th>
+                        <th>Số lượng</th>
+                        <th>Gía</th>
+                        <th>Thành tiền</th>
+
+                        </thead>
+                        <tbody>
+                            @foreach (var item in cart.Lines)
+                            {
+                                <tr>
+                                    <td>@item.Product.TenSua</td>
+                                    <td>@item.Quantity</td>
+                                    <td>@item.Product.DonGia</td>
+                                    <td> @((int)(@item.Quantity * @item.Product.DonGia))</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                    <div class="order-col">
+                        <div><strong>Tổng tất cả</strong></div>
+                        <div><strong class="order-total">@totalMoney <sup>Đ</sup></strong></div>
+                    </div>
+                    <input type="submit" class="primary-btn col-lg-12 col-md-12 col-xs-12" value="Đặt hàng" title="Đặt hàng">
+                </div>
+            </div>
+        </form>
+    </div>
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script>
+        $(document).ready(function () { console.log("Called") })
+        function kiemTraTrong(string) {
+            var check = (document.getElementById(string).value).trim();
+            if (check == "" || check == null) {
+                document.getElementById(string + 'Err').innerHTML = "Không được để trống ";
+                return false;
+            }
+            return true;
+        }
+
+        function kiemTraDoDai(string, min, max) {
+            var check = document.getElementById(string).value.length;
+            if (check < min || check > max) {
+                document.getElementById(string + 'Err').innerHTML = "Độ dài phải từ " + min + ' - ' + max + " kí tự";
+                return false;
+            }
+            return true;
+        }
+
+        function kiemTraLaSo(string) {
+            var check = (document.getElementById(string).value).trim();
+            var pattern = /^[0-9]*$/
+            if (pattern.test(check) == false) {
+                document.getElementById(string + 'Err').innerHTML = "Chỉ gồm số";
+                return false;
+            }
+            return true;
+        }
+
+        function kiemTraLaEmail(string) {
+            var check = (document.getElementById(string).value).trim();
+            var pattern = /^\w+@@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/
+            if (pattern.test(check) == false) {
+                document.getElementById(string + 'Err').innerHTML = "Email không đúng định dạng";
+                return false;
+            }
+            return true;
+        }
+
+        function kiemTraForm() {
+            if (!kiemTraTrong($('#TenKhachHang').attr('id'))) {
+                return false;
+            }
+            if (!kiemTraTrong($('#SDT').attr('id'))) {
+                return false;
+            }
+            if (!kiemTraLaSo($('#SDT').attr('id'))) {
+                return false;
+            }
+            if (!kiemTraTrong($('#Email').attr('id'))) {
+                return false;
+            }
+            if (!kiemTraLaEmail($('#Email').attr('id'))) {
+                return false;
+            }
+            if (!kiemTraTrong($('#DiaChi').attr('id'))) {
+                return false;
+            }
+            return true;
+        }
+
+        $("#Form").submit(function () {
+            console.log('adf');
+            if (kiemTraForm()) {
+                return true;
+                console.log("success");
+            }
+            else {
+                return false;
+                console.log("failed");
+            }
+        })
+    </script>
+</body>
+</html>

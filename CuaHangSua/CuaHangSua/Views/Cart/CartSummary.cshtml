@@ -1,0 +1,109 @@
+﻿@using CuaHangSua.Models.Entities
+@{
+    Cart cart = (Cart)Session["Cart"];
+    int totalItem = 0;
+    float totalMoney = 0.0f;
+
+    if (cart != null)
+    {
+        totalItem = cart.TotalItem();
+        totalMoney = cart.ComputeTotalValue();
+    }
+}
+
+<div class="col-lg-9 col-md-9 col-sm-12 col-xs-12" clearpaddingr">
+
+    <div class="panel panel-info " style="margin-bottom: 15px">
+        <div class="panel-heading">
+            <h3 class="panel-title">Thông tin giỏ hàng</h3>
+        </div>
+        @if (totalItem == 0)
+        {
+            <h4>Giỏ hàng của bạn hiện tại chưa có sản phẩm nào. </h4>@Html.ActionLink("Tiếp tục mua sắm","Index","Home")
+        }
+        else
+        {
+            <div class="panel-body">
+                <table class="table table-hover">
+                    <thead>
+                    <th>Tên sản phẩm</th>
+                    <th>Số lượng</th>
+                    <th>Gía</th>
+                    <th>Thành tiền</th>
+                    <th>Xóa</th>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in cart.Lines)
+                        {
+                            <tr>
+                                <td>@item.Product.TenSua</td>
+                                <td><input type="number" min="1" onchange="onAmountChanged(@item.Product.SuaID,value)" value="@item.Quantity" style="width: 50px" /></td>
+                                <td>@item.Product.DonGia</td>
+                                <td id="@item.Product.SuaID"> @((int)(@item.Quantity * @item.Product.DonGia))</td>
+                                <td><a href="@string.Format("/Cart/RemoveFromCart?id={0}",item.Product.SuaID)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a></td>
+                            </tr>
+                        }
+                        <tr>
+                            <td colspan="3">Tổng tiền</td>
+                            <td id="totalMoney">@totalMoney</td>
+                            <td><a href="/Cart/ClearCart" style="font-weight: bold;color: red">Xóa toàn bộ</a></td>
+                        </tr>
+                        @if (cart.Lines.Count() > 0)
+                        {
+                            if (Session["TenKhachHang"] == null)
+                            {
+                                <tr>
+                                    <td>
+                                        <button style="background-color: green; border:none; color:white; padding:10px" type="button"
+                                                onclick="location.href='@Url.Action("Login", "Account")'" title="Đăng nhập để thanh toán">
+                                            Đăng nhập để thanh toán
+                                        </button>
+                                    </td>
+                                </tr>
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td>
+                                        <button style="background-color: green; border:none; color:white; padding:10px" type="button"
+                                                onclick="location.href='@Url.Action("Checkout", "Cart")'" title="Thanh toán">
+                                            Thanh toán
+                                        </button>
+                                    </td>
+                                </tr>
+                            }
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+        }
+
+    </div>
+</div>
+<script src="~/Scripts/jquery-3.3.1.js"></script>
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script>
+    function onAmountChanged(id,quantity) {
+        /*POST*/
+        $.ajax({
+            url: '/Cart/UpdateQuantity',
+            dataType: "json",
+            type: "POST",
+            contentType: 'application/json; charset=utf-8',
+            data: JSON.stringify({ id: id, quantity: quantity }),
+            async: true,
+            processData: false,
+            cache: false,
+            success: function (data) {
+                console.log(data);
+                $("#" + id).text(data.linevalue);
+                $("#totalMoney").text(data.totalmoney);
+                $("#item_quantity").text(data.soluong);               
+            },
+            error: function (xhr) {
+                console.log(xhr)
+            }
+        })
+    }
+</script>

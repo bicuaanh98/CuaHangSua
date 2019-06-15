@@ -1,16 +1,66 @@
-﻿@model IEnumerable<CuaHangSua.Models.DAO.ProductViewModel>
-
+﻿@model CuaHangSua.Models.ProductListViewModel
+@using CuaHangSua.Models
 @{
     ViewBag.Title = "Index";
 }
 
-<table class="table table-bordered">
-    @foreach (var item in Model)
-    {
-    <tr>
-        <td>@item.SuaID</td>
-        <td>@item.TenSua</td>
-    </tr>
-    }
-</table>
+<div class="selling-products">
+    <div class="title">
+        @if (Model.CurrentCategory != null)
+        {
+            <h3>@Model.CurrentCategory</h3>
+        }
+        else
+        {
+        <h3>Tất cả sản phẩm</h3>
+        }
+    </div>
+    <div style="padding-top:60px">
+        @foreach (var item in Model.Products)
+        {
+            <div class="col-md-4 col-sm-4">
 
+                <div class="product_item">
+                    @if (item.Anh != null)
+                    {
+                        <div class="product-image">
+                            <a href="@Url.Action("DetailProduct", "Home", new { id = item.SuaID})"><img width="60" height="100" src="@Url.Content(item.Anh)" alt="" class=""></a>
+                        </div>
+                    }
+                    <div><p><a href="@Url.Action("DetailProduct", "Home", new { id = item.SuaID})" class="product_name">@item.TenSua</a></p></div>
+
+                    <span class='price text-right'>@item.DonGia</span>
+                    <div><button onclick="addCart(@item.SuaID)" class='btn btn-info'><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> Thêm giỏ hàng</button></div>
+                </div>
+
+            </div>
+        }
+    </div>
+    <div class="btn-group pull-right">
+        @Html.PageLinks(Model.PagingInfo, x => Url.Action("Index", new { page = x, category = Model.CurrentCategory }))
+    </div>
+</div>
+
+<script>
+        function addCart(id) {
+        /*POST*/
+        $.ajax({
+            url: '/Cart/AddToCart',
+            type: "POST",
+            dataType: "json",
+            contentType: 'application/json; charset=utf-8',
+            data: JSON.stringify({ id: id, quantity: 1 }),
+            async: true,
+            processData: false,
+            cache: false,
+            success: function (data) {
+                console.log(data);
+                $("#item_quantity").text(data.soluong);
+            },
+            error: function (xhr) {
+                console.log("That bai");
+            }
+        })
+    }
+
+</script>

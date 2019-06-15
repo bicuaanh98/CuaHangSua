@@ -1,0 +1,94 @@
+﻿@model CuaHangSua.Models.DAO.ProductViewModel
+
+<div class="container" style="float:left">
+    <div class="col-lg-4 col-md-4 col-sm-6">
+        <div class="img-detail">
+            <div class="large-img">
+                <img src="@Url.Content(Model.Anh)" alt="@Model.TenSua" />
+            </div>
+
+        </div>
+    </div>
+    <div class="col-lg-4 col-md-4 col-sm-6">
+        <div class="detail-pro">
+            <div class="pro-name">
+                <p><b>@Model.TenSua</b></p>
+            </div>
+            <div>
+                <span class="price">@Model.DonGia <sup>đ</sup></span>
+            </div>
+            <p><b>Đơn vị tính:</b></p>
+            <div class="discription">@Model.DonViTInh</div>
+
+            <div class="quantity">
+                <span style="margin-right: 30px">Số lượng</span>
+                <span><button class="btn-decrease" onclick="decrease()">-</button></span>
+                <span><input id="quantity" class="input-quantity" type="text" value=1 name="SoLuong"></span>
+                <span><button class="btn-increase" onclick="increase()">+</button></span>
+
+
+            </div>
+
+            <div style="padding-top: 20px; ">
+                <button onclick="addCart(@Model.SuaID)"
+                        style="width:80%" class="btn btn-info">
+                    Thêm vào giỏ hàng
+                </button>
+            </div>
+        </div>
+    </div>
+
+    </div>
+</div>
+<div class="container">
+    <div class="detail-pro">
+        <p><b>Cách dùng:</b></p>
+        <div class="discription">@Model.CachSuDung</div>
+        <p><b>Bảo quản:</b></p>
+        <div class="discription">@Model.BaoQuan</div>
+        <p><b>Thành Phần:</b></p>
+        <div class="discription">@Model.ThanhPhan</div>
+    </div>
+</div>
+
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script>
+
+
+
+    function increase() {
+        var quantity = $('#quantity').val();
+        $("#quantity").val(++quantity);
+    }
+
+    function decrease() {
+        var quantity = $("#quantity").val();
+        if (quantity > 1) {
+            var nqty = quantity - 1;
+            $("#quantity").val(--quantity);
+        }
+    }
+
+    function addCart(id) {
+        /*POST*/
+        $.ajax({
+            url: '/Cart/AddToCart',
+            type: "POST",
+            dataType: "json",
+            contentType: 'application/json; charset=utf-8',
+            data: JSON.stringify({ id: id, quantity: $('#quantity').val() }),
+            async: true,
+            processData: false,
+            cache: false,
+            success: function (data) {
+                $("#item_quantity").text(data.soluong);
+            },
+            error: function (xhr) {
+
+            },
+            complete: function () {
+            }
+        })
+    }
+</script>
+
